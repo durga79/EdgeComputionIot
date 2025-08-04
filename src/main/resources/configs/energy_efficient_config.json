@@ -1,0 +1,184 @@
+{
+  "simulation": {
+    "duration": 3600,
+    "time_unit": "SECONDS",
+    "debug": true,
+    "time_step": 0.1
+  },
+  "iot_devices": {
+    "count": 100,
+    "types": [
+      {
+        "name": "sensor",
+        "mips": 400,
+        "ram": 512,
+        "battery_capacity": 1000.0,
+        "battery_consumption_rate": 0.05,
+        "task_generation_rate": 0.1,
+        "wireless_technology": "BLE",
+        "mobility": false,
+        "mobility_speed": 0.0,
+        "count": 50
+      },
+      {
+        "name": "smartphone",
+        "mips": 1500,
+        "ram": 2048,
+        "battery_capacity": 3000.0,
+        "battery_consumption_rate": 0.2,
+        "task_generation_rate": 0.2,
+        "wireless_technology": "WiFi",
+        "mobility": true,
+        "mobility_speed": 1.0,
+        "count": 30
+      },
+      {
+        "name": "wearable",
+        "mips": 800,
+        "ram": 1024,
+        "battery_capacity": 800.0,
+        "battery_consumption_rate": 0.1,
+        "task_generation_rate": 0.15,
+        "wireless_technology": "BLE",
+        "mobility": true,
+        "mobility_speed": 0.8,
+        "count": 20
+      }
+    ]
+  },
+  "edge_nodes": {
+    "count": 8,
+    "types": [
+      {
+        "name": "small_edge",
+        "mips": 15000,
+        "ram": 8192,
+        "storage": 500000,
+        "bw": 1000,
+        "cost_per_mips": 0.01,
+        "count": 3
+      },
+      {
+        "name": "medium_edge",
+        "mips": 25000,
+        "ram": 16384,
+        "storage": 1000000,
+        "bw": 2000,
+        "cost_per_mips": 0.015,
+        "count": 3
+      },
+      {
+        "name": "large_edge",
+        "mips": 40000,
+        "ram": 32768,
+        "storage": 2000000,
+        "bw": 5000,
+        "cost_per_mips": 0.02,
+        "count": 2
+      }
+    ]
+  },
+  "cloud": {
+    "mips": 100000,
+    "ram": 131072,
+    "storage": 10000000,
+    "bw": 10000,
+    "cost_per_mips": 0.04,
+    "latency_to_edge_ms": 80.0
+  },
+  "network": {
+    "technologies": {
+      "WiFi": {
+        "latency_ms": 10.0,
+        "bandwidth_mbps": 50.0,
+        "reliability": 0.98,
+        "energy_consumption": 0.3
+      },
+      "BLE": {
+        "latency_ms": 15.0,
+        "bandwidth_mbps": 2.0,
+        "reliability": 0.95,
+        "energy_consumption": 0.05
+      },
+      "LTE": {
+        "latency_ms": 40.0,
+        "bandwidth_mbps": 15.0,
+        "reliability": 0.96,
+        "energy_consumption": 0.5
+      },
+      "FiveG": {
+        "latency_ms": 5.0,
+        "bandwidth_mbps": 100.0,
+        "reliability": 0.99,
+        "energy_consumption": 0.4
+      }
+    }
+  },
+  "service_slicing": {
+    "slices": [
+      {
+        "name": "low_energy_slice",
+        "resource_percentage": 0.5,
+        "priority": 1,
+        "task_types": ["lightweight", "medium"]
+      },
+      {
+        "name": "high_perf_slice",
+        "resource_percentage": 0.3,
+        "priority": 2,
+        "task_types": ["medium", "intensive"]
+      },
+      {
+        "name": "general_slice",
+        "resource_percentage": 0.2,
+        "priority": 3,
+        "task_types": ["lightweight", "medium", "intensive"]
+      }
+    ]
+  },
+  "offloading_policy": {
+    "threshold_battery_level": 0.3,
+    "threshold_task_size": 5000,
+    "threshold_network_quality": 0.6,
+    "weight_energy": 0.7,
+    "weight_latency": 0.2,
+    "weight_cost": 0.1
+  },
+  "tasks": {
+    "types": [
+      {
+        "name": "lightweight",
+        "mips_required_min": 500,
+        "mips_required_max": 1000,
+        "input_size_min": 10,
+        "input_size_max": 100,
+        "output_size_min": 5,
+        "output_size_max": 50,
+        "deadline_seconds_min": 1.0,
+        "deadline_seconds_max": 5.0
+      },
+      {
+        "name": "medium",
+        "mips_required_min": 1000,
+        "mips_required_max": 5000,
+        "input_size_min": 100,
+        "input_size_max": 1000,
+        "output_size_min": 50,
+        "output_size_max": 500,
+        "deadline_seconds_min": 2.0,
+        "deadline_seconds_max": 10.0
+      },
+      {
+        "name": "intensive",
+        "mips_required_min": 5000,
+        "mips_required_max": 10000,
+        "input_size_min": 1000,
+        "input_size_max": 10000,
+        "output_size_min": 500,
+        "output_size_max": 5000,
+        "deadline_seconds_min": 5.0,
+        "deadline_seconds_max": 30.0
+      }
+    ]
+  }
+}

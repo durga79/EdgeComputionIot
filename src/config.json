@@ -1,0 +1,154 @@
+{
+  "simulation": {
+    "duration": 3600,
+    "time_unit": "SECONDS",
+    "debug": true
+  },
+  "iot_devices": {
+    "count": 20,
+    "types": [
+      {
+        "name": "sensor",
+        "mips": 500,
+        "ram": 512,
+        "battery_capacity": 5000,
+        "battery_consumption_rate": 0.5,
+        "task_generation_rate": 0.2,
+        "wireless_technology": "WiFi",
+        "mobility": false
+      },
+      {
+        "name": "smartphone",
+        "mips": 2000,
+        "ram": 2048,
+        "battery_capacity": 3000,
+        "battery_consumption_rate": 1.2,
+        "task_generation_rate": 0.8,
+        "wireless_technology": "LTE",
+        "mobility": true
+      },
+      {
+        "name": "wearable",
+        "mips": 800,
+        "ram": 1024,
+        "battery_capacity": 1500,
+        "battery_consumption_rate": 0.8,
+        "task_generation_rate": 0.4,
+        "wireless_technology": "BLE",
+        "mobility": true
+      }
+    ]
+  },
+  "edge_nodes": {
+    "count": 5,
+    "types": [
+      {
+        "name": "small_edge",
+        "mips": 20000,
+        "ram": 8192,
+        "storage": 102400,
+        "bw": 10000,
+        "cost_per_mips": 0.01
+      },
+      {
+        "name": "medium_edge",
+        "mips": 40000,
+        "ram": 16384,
+        "storage": 204800,
+        "bw": 20000,
+        "cost_per_mips": 0.015
+      },
+      {
+        "name": "large_edge",
+        "mips": 80000,
+        "ram": 32768,
+        "storage": 409600,
+        "bw": 40000,
+        "cost_per_mips": 0.02
+      }
+    ]
+  },
+  "tasks": {
+    "types": [
+      {
+        "name": "lightweight",
+        "mips_required": 500,
+        "input_size": 1024,
+        "output_size": 512,
+        "deadline_seconds": 2
+      },
+      {
+        "name": "medium",
+        "mips_required": 2000,
+        "input_size": 5120,
+        "output_size": 1024,
+        "deadline_seconds": 5
+      },
+      {
+        "name": "intensive",
+        "mips_required": 8000,
+        "input_size": 10240,
+        "output_size": 2048,
+        "deadline_seconds": 10
+      }
+    ]
+  },
+  "network": {
+    "technologies": {
+      "WiFi": {
+        "latency_ms": 15,
+        "bandwidth_mbps": 50,
+        "reliability": 0.95,
+        "energy_consumption": 0.8
+      },
+      "LTE": {
+        "latency_ms": 30,
+        "bandwidth_mbps": 20,
+        "reliability": 0.97,
+        "energy_consumption": 1.2
+      },
+      "BLE": {
+        "latency_ms": 50,
+        "bandwidth_mbps": 1,
+        "reliability": 0.9,
+        "energy_consumption": 0.2
+      },
+      "FiveG": {
+        "latency_ms": 5,
+        "bandwidth_mbps": 100,
+        "reliability": 0.99,
+        "energy_consumption": 1.5
+      }
+    }
+  },
+  "service_slicing": {
+    "slices": [
+      {
+        "name": "critical",
+        "resource_percentage": 0.4,
+        "priority": 1,
+        "task_types": ["intensive"]
+      },
+      {
+        "name": "standard",
+        "resource_percentage": 0.3,
+        "priority": 2,
+        "task_types": ["medium"]
+      },
+      {
+        "name": "best_effort",
+        "resource_percentage": 0.3,
+        "priority": 3,
+        "task_types": ["lightweight"]
+      }
+    ]
+  },
+  "offloading_policy": {
+    "threshold_battery_level": 0.3,
+    "threshold_task_size": 1000,
+    "threshold_network_quality": 0.7,
+    "weight_energy": 0.4,
+    "weight_latency": 0.4,
+    "weight_cost": 0.2
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "simulation": {
+    "duration": 10.0,
+    "time_step": 1.0,
+    "time_unit": "SECONDS",
+    "debug": false
+  },
+  "iot_devices": {
+    "count": 3,
+    "types": [
+      {
+        "name": "sensor",
+        "mips": 500,
+        "ram": 512,
+        "battery_capacity": 5000,
+        "battery_consumption_rate": 0.5,
+        "task_generation_rate": 0.3,
+        "wireless_technology": "WiFi",
+        "mobility": false,
+        "mobility_speed": 0.0
+      },
+      {
+        "name": "smartphone",
+        "mips": 2000,
+        "ram": 2048,
+        "battery_capacity": 3000,
+        "battery_consumption_rate": 1.0,
+        "task_generation_rate": 0.5,
+        "wireless_technology": "LTE",
+        "mobility": true,
+        "mobility_speed": 1.5
+      }
+    ]
+  },
+  "edge_nodes": {
+    "count": 2,
+    "types": [
+      {
+        "name": "small_edge",
+        "mips": 5000,
+        "ram": 8192,
+        "storage": 102400,
+        "bw": 1000,
+        "cost_per_mips": 0.01
+      }
+    ]
+  },
+  "cloud": {
+    "mips": 50000,
+    "ram": 32768,
+    "storage": 1048576,
+    "bw": 10000,
+    "cost_per_mips": 0.05,
+    "latency_to_edge_ms": 100
+  },
+  "network": {
+    "technologies": {
+      "WiFi": {
+        "latency_ms": 10,
+        "bandwidth": 100,
+        "energy_per_bit": 0.0001
+      },
+      "LTE": {
+        "latency_ms": 50,
+        "bandwidth": 50,
+        "energy_per_bit": 0.0005
+      },
+      "BLE": {
+        "latency_ms": 5,
+        "bandwidth": 1,
+        "energy_per_bit": 0.00001
+      }
+    }
+  },
+  "service_slicing": {
+    "slices": [
+      {
+        "name": "default",
+        "resource_percentage": 1.0,
+        "priority": 1,
+        "task_types": ["lightweight"]
+      }
+    ]
+  },
+  "offloading_policy": {
+    "type": "utility",
+    "parameters": {
+      "weight_latency": 0.4,
+      "weight_energy": 0.3,
+      "weight_cost": 0.3
+    }
+  }
+}
