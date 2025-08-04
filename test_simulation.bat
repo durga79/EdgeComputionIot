@@ -61,12 +61,12 @@ if exist "%OUTPUT_DIR%\summary.json" (
     echo %GREEN%  Key Metrics%NC%
     echo %GREEN%========================================%NC%
     
-    :: Extract key metrics using PowerShell
-    powershell -Command "& {$summary = Get-Content '%OUTPUT_DIR%\summary.json' -Raw; if ($summary -match 'Total tasks: (\d+)') { Write-Host \"Total Tasks: $($matches[1])\" }; if ($summary -match 'Tasks executed locally: (\d+) \(([0-9.]+)%\)') { Write-Host \"Tasks executed locally: $($matches[1]) ($($matches[2])%)\" }; if ($summary -match 'Tasks executed on edge: (\d+) \(([0-9.]+)%\)') { Write-Host \"Tasks executed on edge: $($matches[1]) ($($matches[2])%)\" }; if ($summary -match 'Tasks executed on cloud: (\d+) \(([0-9.]+)%\)') { Write-Host \"Tasks executed on cloud: $($matches[1]) ($($matches[2])%)\" }}"
+    :: Extract key metrics using PowerShell with more permissive pattern matching
+    powershell -Command "& {$content = Get-Content '%OUTPUT_DIR%\summary.json'; $content | Select-String -Pattern 'Total tasks:' -Context 0,0; $content | Select-String -Pattern 'Tasks executed locally:' -Context 0,0; $content | Select-String -Pattern 'Tasks executed on edge:' -Context 0,0; $content | Select-String -Pattern 'Tasks executed on cloud:' -Context 0,0; $content | Select-String -Pattern 'Deadline met:' -Context 0,0}"
     
     echo.
     echo Resource Utilization:
-    powershell -Command "& {$summary = Get-Content '%OUTPUT_DIR%\summary.json' -Raw; if ($summary -match 'Average CPU utilization: ([0-9.]+)%') { Write-Host \"Edge CPU: $($matches[1])%\" }; if ($summary -match 'Average RAM utilization: ([0-9.]+)%') { Write-Host \"Edge RAM: $($matches[1])%\" }; if ($summary -match 'CPU utilization: ([0-9.]+)%') { Write-Host \"Cloud CPU: $($matches[1])%\" }; if ($summary -match 'RAM utilization: ([0-9.]+)%') { Write-Host \"Cloud RAM: $($matches[1])%\" }}"
+    powershell -Command "& {$content = Get-Content '%OUTPUT_DIR%\summary.json'; $content | Select-String -Pattern 'CPU utilization:' -Context 0,0; $content | Select-String -Pattern 'RAM utilization:' -Context 0,0; $content | Select-String -Pattern 'bandwidth utilization:' -Context 0,0}"
     
     echo.
     echo %GREEN%Simulation completed successfully!%NC%
